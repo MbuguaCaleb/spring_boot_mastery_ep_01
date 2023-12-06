@@ -399,3 +399,82 @@ Hiberant is the ORM
 JPA -->Query using java objects
 JDBC-->Query using SQL.
 ```
+
+**DB CONFIG INFO**
+
+```agsl
+spring.datasource.url=jdbc:postgresql://localhost:5432/postgres
+spring.datasource.username=postgres
+spring.datasource.password=changemeinprod!
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.sql.init.mode=always
+
+```
+**Running a Database Dump File on Start Up**
+
+**Postgres Init SQL Database**
+
+```agsl
+we add a property 
+
+spring.sql.init.mode = always
+
+with this property it runs the data.sql and schema.sql when initialised.
+
+```
+
+**JDBC Template setUp**
+
+```agsl
+Intreacting with the database using SQL,
+
+It is a very good alternative when we want to have fine grain control of our queries.
+
+```
+**Data Access Object Pattern**
+
+
+```agsl
+We do not want each and every service in our application to intereact with the database in
+multiple repeated times.
+
+For that reason we have DAO(s) whose responsibility is to interact with the database and do
+the mappings to and from SQL to Java Objects.
+
+These DAO(s) are then injected into the service which increases modularity of our application.
+
+A DAO is a class corresponding to an entity, It is the responsibility of the DAO(s) in good
+application design to know the structure of the database in relation to their entities then
+handle the mapping to and fro Java Ojects.
+
+Services can then inject the DAO(s) and ride on their behaviour through a nice ,clean interface.
+
+```
+
+**Database Integration Test**
+
+```agsl
+Dependecies can have scope, eg we can use different DB(s) in production and UAT,
+
+    <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <scope>test</scope>
+    </dependency>
+    
+The H2 Database can be set to emulate any DB of choice,
+
+spring.datasource.url=jdbc:h2:mem:testdb;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+spring.datasource.username=sa
+spring.datasource.password=password
+spring.datasource.driver-class-name=org.h2.Driver
+
+```
+
+
+**Testing tips**
+
+```
+Our test packages should be a reflection of how our main packages look like
+
+```
