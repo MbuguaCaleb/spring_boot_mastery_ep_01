@@ -364,5 +364,38 @@ that are marching the provided prefix,and put them inside the class that is now 
 **SpringBoot and Databases**
 
 ```agsl
+(a)Any Major database like mysql and postgres will make a java database driver available.This enables us
+interact with the database from our code.
 
+(b)JDBC -->Low level api that helps me write custom SQL queries while in my Java code.
+
+(c)Spring JDBC build on top of JDBC and more importanty gives us the JDBC template.The template makes it easier
+interacting with SQL than just JDBC.
+
+N/B
+Disadvantage of JDBC is that i have to map java objects to and fro by myself.
+
+i have to handle the mapping all by myself.To and from Java Objects.
+
+Remember that data from your database must be mapped into an Object and vice versa.
+
+(d)JPA--->Java Persistence API (Helps us interact with the database by Using Java Objects)It handles all the generation of the SQL and the mapping to 
+and fro Java Objects for us.
+
+It is built on top of JDBC.It is a high level API.
+
+In JPA being high level we can change the database we are using and not change bits of our code.
+
+(I can easily swap from MYSQL to PostgreSQL and Vice Versa)
+
+Technically JPA is a specification, the actual implementation is called hibernate.
+
+Hibernate can be referred to as an ORM, mapping from SQL to Java Objects and vice versa,
+
+JPA is a spefication
+Hiberant is the ORM
+(e)Spring Data JPA builds on top of JPA adding some extra functionaly like repositories.
+
+JPA -->Query using java objects
+JDBC-->Query using SQL.
 ```
