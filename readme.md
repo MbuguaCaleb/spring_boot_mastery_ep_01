@@ -475,6 +475,14 @@ spring.datasource.driver-class-name=org.h2.Driver
 **Testing tips**
 
 ```
-Our test packages should be a reflection of how our main packages look like
+Our test packages should be a reflection of how our main packages look like.
+
+It is good practice to seperate the test database from the production database.
+```
+
+**Java Todo(s)**
+
+```agsl
+(a)Stream API
 
 ```

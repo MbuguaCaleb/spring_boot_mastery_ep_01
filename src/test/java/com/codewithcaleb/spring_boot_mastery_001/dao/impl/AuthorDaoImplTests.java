@@ -1,7 +1,6 @@
-package com.codewithcaleb.spring_boot_mastery_001.dao;
+package com.codewithcaleb.spring_boot_mastery_001.dao.impl;
 
 
-import com.codewithcaleb.spring_boot_mastery_001.dao.impl.AuthorDaoImpl;
 import com.codewithcaleb.spring_boot_mastery_001.domain.Author;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +23,7 @@ public class AuthorDaoImplTests {
     // -->before each test is run a new instance of AutoDaoImpl is creeated for us injected
     //remeber you may have more than one test case in the class
     @InjectMocks
-    private AuthorDaoImpl underTest;
+    private AuthorDaoImpl authorDaoTest;
 
     @Test
     public void testThatCreateAuthorGeneratesCorrectSQL() {
@@ -36,7 +35,7 @@ public class AuthorDaoImplTests {
                 .build();
 
         //method i am testing where a JDBC create SQL will be executed
-        underTest.create(author);
+        authorDaoTest.create(author);
 
         //When i do a create,there is an SQL that is expected
         //since its jdbc being used, we can use mockito verify method
@@ -49,5 +48,17 @@ public class AuthorDaoImplTests {
                 eq(1L),eq("Caleb Mbugua"),eq(28)
         );
 
+    }
+
+
+    //wHEN Using JDBC remember we have to handle type conversions all by ourselves
+    //we are passing our custom created AuthorRowMapper,inside argument ArgumentMatchers
+    @Test
+    public void testThatFindOneGeneratesTheCorrectSQL(){
+        authorDaoTest.findOne(1L);
+        verify(jdbcTemplate).
+                query(eq("SELECT id,name,age FROM authors WHERE id = ? LIMIT 1"),
+                ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any(),
+                eq(1L));
     }
 }

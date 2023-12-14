@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 //Remeber this which reprsents the entities should not be injected into the context
 //We should just have the appropriate getters and setters
+
+//Builder pattern is perfect for dto, you can easily assign values into the class
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
