@@ -31,11 +31,17 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public Optional<Book> find(String isbn) {
+    public Optional<Book> findOne(String isbn) {
         //When using JDBC remeber that you must have custom  mappings to and fro Java Objects
-        List<Book> results = jdbcTemplate.query("SELECT isbn,title,author_id FROM books WHERE isbn  = ? LIMIT 1",
+        List<Book> results = jdbcTemplate.query("SELECT isbn,title,author_id FROM books WHERE isbn = ? LIMIT 1",
                 new BookDaoImpl.BookRowMapper(), isbn);
         return results.stream().findFirst();
+    }
+
+
+    @Override
+    public List<Book> find() {
+        return jdbcTemplate.query("SELECT isbn,title,author_id FROM books", new BookDaoImpl.BookRowMapper());
     }
 
     public static  class BookRowMapper implements RowMapper<Book> {
@@ -48,4 +54,5 @@ public class BookDaoImpl implements BookDao {
                     .build();
         }
     }
+
 }

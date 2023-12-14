@@ -499,6 +499,23 @@ Note that if you have foreign key constraints integration tests will not run, if
 populated data from the first table
 
 ```
+
+**Test Pollution**
+
+```agsl
+Example you have two seperate tests and both are creating/inserting data in a database.
+
+once the first has inserted the data, the next one will raise and excpetion, this is what we call test pollution
+
+The ideal phenomenon is that we should have a single database on each test.
+
+we use @DirtiesContextMethod for this particular purpose
+
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+
+It cleans down the context and makes it ready for the next test to run
+
+```
 **Java Todo(s)**
 
 ```agsl

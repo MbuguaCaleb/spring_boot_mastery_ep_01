@@ -48,6 +48,11 @@ public class AuthorDaoImpl implements AuthorDao {
                     .age(rs.getInt("age"))
                     .build();
         }
-
     }
+
+    @Override
+    public List<Author> find() {
+        return jdbcTemplate.query("SELECT id,name,age FROM authors", new AuthorRowMapper());
+    }
+
 }

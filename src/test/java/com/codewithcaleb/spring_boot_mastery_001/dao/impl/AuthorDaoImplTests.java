@@ -30,7 +30,7 @@ public class AuthorDaoImplTests {
     @Test
     public void testThatCreateAuthorGeneratesCorrectSQL() {
         //Object that i want to put inside my DB
-        Author author = TestDataUtil.createTestAuthor();
+        Author author = TestDataUtil.createTestAuthorA();
 
         //method i am testing where a JDBC create SQL will be executed
         authorDaoTest.create(author);
@@ -59,5 +59,14 @@ public class AuthorDaoImplTests {
                 query(eq("SELECT id,name,age FROM authors WHERE id = ? LIMIT 1"),
                 ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any(),
                 eq(1L));
+    }
+
+    @Test
+    public void testThatFindManyGeneratesCorrectSQL(){
+        authorDaoTest.find();
+        verify(jdbcTemplate)
+                .query(eq("SELECT id,name,age FROM authors"),
+                ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any());
+
     }
 }
