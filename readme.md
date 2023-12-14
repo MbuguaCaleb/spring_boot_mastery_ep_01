@@ -480,6 +480,25 @@ Our test packages should be a reflection of how our main packages look like.
 It is good practice to seperate the test database from the production database.
 ```
 
+
+**Integration Tests**
+
+```agsl
+Itegration Tests things like database connectivity etc.
+Unit Tests tests our code.
+
+UnitTests are run by the Maven Surefire PlugIn
+
+The naming of our integration Test is important, if i run my tests with the IT prefix
+
+@SpringBootTest-->Starts the test version of our application when our tests run
+
+@ExtendWith(SpringExtension.class) -->Adds all the functionalities that come with spring
+
+Note that if you have foreign key constraints integration tests will not run, if you have not
+populated data from the first table
+
+```
 **Java Todo(s)**
 
 ```agsl

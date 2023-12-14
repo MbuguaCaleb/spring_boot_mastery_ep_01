@@ -1,6 +1,7 @@
 package com.codewithcaleb.spring_boot_mastery_001.dao.impl;
 
 
+import com.codewithcaleb.spring_boot_mastery_001.TestDataUtil;
 import com.codewithcaleb.spring_boot_mastery_001.domain.Author;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,14 +26,11 @@ public class AuthorDaoImplTests {
     @InjectMocks
     private AuthorDaoImpl authorDaoTest;
 
+
     @Test
     public void testThatCreateAuthorGeneratesCorrectSQL() {
         //Object that i want to put inside my DB
-        Author author = Author.builder()
-                .id(1L)
-                .name("Caleb Mbugua")
-                .age(28)
-                .build();
+        Author author = TestDataUtil.createTestAuthor();
 
         //method i am testing where a JDBC create SQL will be executed
         authorDaoTest.create(author);
@@ -49,6 +47,7 @@ public class AuthorDaoImplTests {
         );
 
     }
+
 
 
     //wHEN Using JDBC remember we have to handle type conversions all by ourselves

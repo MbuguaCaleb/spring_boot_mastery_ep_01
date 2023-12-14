@@ -4,6 +4,7 @@ import com.codewithcaleb.spring_boot_mastery_001.dao.AuthorDao;
 import com.codewithcaleb.spring_boot_mastery_001.domain.Author;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 
 //responsible for interacting with the database as well as Java Object to SQL mapping
+@Component
 public class AuthorDaoImpl implements AuthorDao {
 
     private final JdbcTemplate jdbcTemplate;

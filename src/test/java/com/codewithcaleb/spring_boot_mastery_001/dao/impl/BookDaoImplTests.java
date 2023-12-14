@@ -1,5 +1,6 @@
 package com.codewithcaleb.spring_boot_mastery_001.dao.impl;
 
+import com.codewithcaleb.spring_boot_mastery_001.TestDataUtil;
 import com.codewithcaleb.spring_boot_mastery_001.domain.Book;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,12 +24,7 @@ public class BookDaoImplTests {
 
     @Test
     public void testThatCreateBookGeneratesCorrectSQL() {
-        Book book = Book.builder()
-                .isbn("8486-76-897897-3")
-                .title("Caleb Masters Spring")
-                .authorId(1L)
-                .build();
-
+        Book book = TestDataUtil.createTestBook();
         bookImplTest.create(book);
         verify(jdbcTemplate).update(
                 eq("INSERT INTO books (isbn,title,author_id) VALUES (?,?,?)"),
