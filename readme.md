@@ -478,8 +478,10 @@ spring.datasource.driver-class-name=org.h2.Driver
 Our test packages should be a reflection of how our main packages look like.
 
 It is good practice to seperate the test database from the production database.
-```
 
+It is about writing the behaviour then adding the minimal viable code,to accomplish what you desire.
+
+```
 
 **Integration Tests**
 
@@ -517,6 +519,65 @@ we use @DirtiesContextMethod for this particular purpose
 
 It cleans down the context and makes it ready for the next test to run
 
+```
+
+**Spring Data JPA and Hibernate**
+
+```agsl
+
+It is very very high level, when using JPA, We do not need to create our dao(s) with SQL as we would do with JDBC.
+
+(DAO The layer we were writing with JDBC ,especially for CRUD is entirely handled by hibernate)
+
+(All the SQL is generated for US by hibernate)
+
+@Entity Annotation
+
+Once i label a doman with @Entity annotation when using spring JPA it is treated as a database table
+This is done by the hibernate auto DDL.
+
+If i was using jdbc the only way i would create my entities is via bringing SQL
+
+The setting that makes hibernate to autocreate tables is,spring.jpa.hibernate.ddl-auto=update
+
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/postgres
+spring.datasource.username=postgres
+spring.datasource.password=changemeinprod!
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.hibernate.ddl-auto=update
+
+```
+
+**Repositories**
+
+```agsl
+
+They are the DAO(s) when using spring data JPA, In them they have the SQL needed for our CRUD
+Operations,
+
+We do not have to provide implemenatation for them
+
+They come with a very large number of already premade methods, this is hibernate in action,
+
+You do not create the SQL and as well do not handle the conversion to or fro Java Objects,
+
+extending public interface AuthorRepository extends CrudRepository<Author,Long> {
+
+gives us a lot of methods that we can inherit.
+
+```
+
+**Cascade DataType**
+
+```agsl
+  
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "author_id")
+    
+    in a many to one context it means that as i create the child i out of the box i am able
+    to create/fetch the one in a relationship
+    
 ```
 **Java Todo(s)**
 

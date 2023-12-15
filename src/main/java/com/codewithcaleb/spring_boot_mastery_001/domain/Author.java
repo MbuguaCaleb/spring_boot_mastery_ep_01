@@ -1,20 +1,22 @@
 package com.codewithcaleb.spring_boot_mastery_001.domain;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-//Remeber this which reprsents the entities should not be injected into the context
-//We should just have the appropriate getters and setters
-
-//Builder pattern is perfect for dto, you can easily assign values into the class
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
+@Table(name = "authors")
 public class Author {
+
+    @Id //-->denotes a primary Key
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "author_id_seq") // instead of me having to add an ID and put in values when instantiating an Object, Spring will handle this on my behalf
     private Long id;
     private String name;
     private Integer age;

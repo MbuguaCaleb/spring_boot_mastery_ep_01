@@ -1,7 +1,6 @@
-package com.codewithcaleb.spring_boot_mastery_001.dao.impl;
+package com.codewithcaleb.spring_boot_mastery_001.repositories;
 
 import com.codewithcaleb.spring_boot_mastery_001.TestDataUtil;
-import com.codewithcaleb.spring_boot_mastery_001.dao.AuthorDao;
 import com.codewithcaleb.spring_boot_mastery_001.domain.Author;
 import com.codewithcaleb.spring_boot_mastery_001.domain.Book;
 import org.junit.jupiter.api.Test;
@@ -11,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,17 +17,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class BookDaoImplIntegerationTests {
+public class BookRepositoryIntegerationTests {
 
     //I want to test whether a book was created
     //Whether i can fetch the crated book
-    private BookDaoImpl underTest;
-    private AuthorDao authorDao;
+    private BookRepository underTest;
 
     @Autowired //I Am slight outside the spring context not like other spring test applications
-    private BookDaoImplIntegerationTests(BookDaoImpl underTest,AuthorDao authorDao){
+    private BookRepositoryIntegerationTests(BookRepository underTest){
         this.underTest = underTest;
-        this.authorDao = authorDao;
     }
 
 
@@ -38,34 +34,31 @@ public class BookDaoImplIntegerationTests {
     //Production code should be perfect
     @Test
     public void testThatABookCanBeCreatedAndRecalled(){
-        //Remember there is a foreign key relationship, between the author and the Book
-        //Creating the Author First
         Author author = TestDataUtil.createTestAuthorA();
-        authorDao.create(author);
-        Book book = TestDataUtil.createTestBookA();
-        book.setAuthorId(author.getId());
-        underTest.create(book);
-        Optional<Book> result = underTest.findOne(book.getIsbn());
+
+        //As i create the book because i have the cascade i will also create the author
+        Book book = TestDataUtil.createTestBookA(author);
+        this.underTest.save(book);
+        Optional<Book> result = this.underTest.findById(book.getIsbn());
         assertThat(result).isPresent();
         assertThat(result.get()).isEqualTo(book);
     }
+
 
     @Test
     public void testThatMultipleBooksCanBeCreatedAndRecalled(){
 
         Author author = TestDataUtil.createTestAuthorA();
-        authorDao.create(author);
-        Book testBookA = TestDataUtil.createTestBookA();
-        testBookA.setAuthorId(author.getId());
-        underTest.create(testBookA);
-        Book testBookB = TestDataUtil.createTestBookB();
-        testBookB.setAuthorId(author.getId());
-        underTest.create(testBookB);
-        Book testBookC = TestDataUtil.createTestBookC();
-        testBookC.setAuthorId(author.getId());
-        underTest.create(testBookC);
+        Book testBookA = TestDataUtil.createTestBookA(author);
+        underTest.save(testBookA);
 
-        List<Book> results = underTest.find();
+        Book testBookB = TestDataUtil.createTestBookB(author);
+        underTest.save(testBookB);
+
+        Book testBookC = TestDataUtil.createTestBookC(author);
+        underTest.save(testBookC);
+
+        Iterable<Book> results = underTest.findAll();
         assertThat(results)
                 .hasSize(3)
                 .containsExactly(testBookA,testBookB,testBookC);
@@ -73,23 +66,39 @@ public class BookDaoImplIntegerationTests {
     }
 
 
+
     @Test
     public void testThatBookCanBeUpdated(){
 
         Author author = TestDataUtil.createTestAuthorA();
-        authorDao.create(author);
-
-        Book testBookA = TestDataUtil.createTestBookA();
-        testBookA.setAuthorId(author.getId());
-        underTest.create(testBookA);
+        Book testBookA = TestDataUtil.createTestBookA(author);
+        underTest.save(testBookA);
 
         testBookA.setTitle("Updated");
-        underTest.update(testBookA.getIsbn(),testBookA);
+        underTest.save(testBookA);
 
         //get single book
-        Optional<Book> result = underTest.findOne(testBookA.getIsbn());
+        Optional<Book> result = underTest.findById(testBookA.getIsbn());
         assertThat(result).isPresent();
         assertThat(result.get()).isEqualTo(testBookA);
+
+    }
+
+
+    @Test
+    public void testThatBookCanBeDeleted(){
+        Author author = TestDataUtil.createTestAuthorA();
+        //create a book (Cascade will create author associated with the book)
+        Book testBookA = TestDataUtil.createTestBookA(author);
+
+        underTest.save(testBookA);
+
+        String isbn = testBookA.getIsbn();
+        underTest.deleteById(isbn);
+
+        //find deleted Optional
+        Optional<Book> result = underTest.findById(isbn);
+        assertThat(result).isEmpty();
 
     }
 }

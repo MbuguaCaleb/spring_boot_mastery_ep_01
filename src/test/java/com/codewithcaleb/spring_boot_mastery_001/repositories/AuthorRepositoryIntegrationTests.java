@@ -1,5 +1,4 @@
-package com.codewithcaleb.spring_boot_mastery_001.dao.impl;
-
+package com.codewithcaleb.spring_boot_mastery_001.repositories;
 
 import com.codewithcaleb.spring_boot_mastery_001.TestDataUtil;
 import com.codewithcaleb.spring_boot_mastery_001.domain.Author;
@@ -19,22 +18,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class AuthorDaoImplIntergrationTests {
+public class AuthorRepositoryIntegrationTests {
 
-    private final AuthorDaoImpl underTest;
+    private final AuthorRepository underTest;
 
 
     //autowired is used in tests for dependency injection
     @Autowired
-    public AuthorDaoImplIntergrationTests(AuthorDaoImpl underTest){
+    public AuthorRepositoryIntegrationTests(AuthorRepository underTest){
         this.underTest = underTest;
     }
 
     @Test
     public void testThatAuthorCanBeCreatedAndRecalled(){
         Author author = TestDataUtil.createTestAuthorA();
-        underTest.create(author);
-        Optional<Author> result = underTest.findOne(author.getId());
+        underTest.save(author);
+        Optional<Author> result = underTest.findById(author.getId());
         assertThat(result).isPresent();
         assertThat(result.get()).isEqualTo(author);
     }
@@ -42,31 +41,51 @@ public class AuthorDaoImplIntergrationTests {
     @Test
     public void testThatMultipleAuthorsCanBeCreatedAndRecalled(){
         Author testAuthorA = TestDataUtil.createTestAuthorA();
-        underTest.create(testAuthorA);
+        underTest.save(testAuthorA);
         Author testAuthorB = TestDataUtil.createTestAuthorB();
-        underTest.create(testAuthorB);
+        underTest.save(testAuthorB);
         Author testAuthorC = TestDataUtil.createTestAuthorC();
-        underTest.create(testAuthorC);
+        underTest.save(testAuthorC);
 
-        List<Author> result = underTest.find();
+        Iterable<Author> result = underTest.findAll();
         assertThat(result)
                 .hasSize(3)
                 .contains(testAuthorA,testAuthorB,testAuthorC);
     }
 
+
     @Test
     public void testThatAuthorCanBeUpdated(){
         //i need to create then update
         Author testAuthorA = TestDataUtil.createTestAuthorA();
-        underTest.create(testAuthorA);
+        underTest.save(testAuthorA);
+
+        //save is used for creating and updating in Spring Data JPA
         testAuthorA.setName("UPDATED");
-        underTest.update(testAuthorA.getId(),testAuthorA);
+        underTest.save(testAuthorA);
 
         //finding the updated author to assert the results
-        Optional<Author> result = underTest.findOne(testAuthorA.getId());
+        Optional<Author> result = underTest.findById(testAuthorA.getId());
         assertThat(result).isPresent();
         assertThat(result.get()).isEqualTo(testAuthorA);
+    }
 
+    @Test
+    public void testAuthorCanBeDeleted(){
+
+        //creating an author
+        Author testAuthorA = TestDataUtil.createTestAuthorA();
+        underTest.save(testAuthorA);
+
+        Long authorId = testAuthorA.getId();
+
+        underTest.deleteById(authorId);
+
+        //Get the optional
+        Optional<Author> result = underTest.findById(authorId);
+
+        //assert
+        assertThat(result).isEmpty();
 
     }
 
