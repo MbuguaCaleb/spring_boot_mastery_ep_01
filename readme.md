@@ -579,6 +579,17 @@ gives us a lot of methods that we can inherit.
     to create/fetch the one in a relationship
     
 ```
+
+**Custom Queries JPA**
+```agsl
+Spring is clever enough to create an SQL with age less than
+IS ABLE TO WORK Out custom queries depending on how i name methods in my interface
+
+example, Iterable<Author> ageLessThan(int age);
+
+There are times i may require more SQL hints,this is where HQL comes in,
+
+```
 **Java Todo(s)**
 
 ```agsl
