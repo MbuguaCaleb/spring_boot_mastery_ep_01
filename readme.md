@@ -590,6 +590,39 @@ example, Iterable<Author> ageLessThan(int age);
 There are times i may require more SQL hints,this is where HQL comes in,
 
 ```
+
+**Jackson**
+
+```agsl
+Popular Java Liblary for dealing with JSON in the Java programming language
+
+The process of turning a Java Object into JSON is ---> marshlling
+The process of turning JSON into a Java Object is called --->Unmarshling
+
+important to not on jackson.
+
+
+  @JsonProperty("year")
+  private String yearPublished;
+  
+  YearPublished will have another name
+  
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Book {
+
+  private String isbn;
+
+  private String title;
+
+  private String author;
+
+  @JsonProperty("year")
+  private String yearPublished;
+}
+
+Any propery not in the above can be ignored
+```
 **Java Todo(s)**
 
 ```agsl
