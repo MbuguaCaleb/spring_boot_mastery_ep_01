@@ -69,4 +69,12 @@ public class AuthorDaoImplTests {
                 ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any());
 
     }
+
+    @Test
+    public void testThatUpdateGeneratesCorrectSQL(){
+        Author author = TestDataUtil.createTestAuthorA();
+        authorDaoTest.update(3L,author);
+        verify(jdbcTemplate).update("UPDATE authors set id = ? ,name = ? ,age = ? WHERE id =?",
+                1L,"Caleb Mbugua",28,3L);
+    }
 }

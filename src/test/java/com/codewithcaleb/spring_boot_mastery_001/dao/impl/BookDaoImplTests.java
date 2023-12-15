@@ -10,6 +10,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.Optional;
+
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
@@ -52,4 +54,17 @@ public class BookDaoImplTests {
                 ArgumentMatchers.<BookDaoImpl.BookRowMapper>any());
 
     }
+
+    @Test
+    public void testThatUpdateGeneratesCorrectSQL(){
+        Book testBookA = TestDataUtil.createTestBookA();
+        bookImplTest.update("8486-76-897897-3",testBookA);
+
+        verify(jdbcTemplate)
+                .update("UPDATE books SET isbn = ? ,title= ?,author_id= ? WHERE isbn= ?",
+                "8486-76-897897-3","Caleb Masters Spring",1L,"8486-76-897897-3");
+
+    }
+
+
 }

@@ -484,6 +484,8 @@ It is good practice to seperate the test database from the production database.
 **Integration Tests**
 
 ```agsl
+They test the behavoir eg asserts.
+
 Itegration Tests things like database connectivity etc.
 Unit Tests tests our code.
 
