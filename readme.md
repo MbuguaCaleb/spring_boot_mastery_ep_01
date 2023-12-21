@@ -615,7 +615,7 @@ public class Book {
 
   private String title;
 
-  private String author;
+  private String authorEntity;
 
   @JsonProperty("year")
   private String yearPublished;
@@ -623,9 +623,29 @@ public class Book {
 
 Any propery not in the above can be ignored
 ```
+
+**Rest API Tips**
+
+```agsl
+
+ @RequestBody--->The JSON Will be mapped into a Java Object
+ The persistence layer should not have any interaction with the presentation layer
+ We should never return entities in the controller/presentation layer.
+```
+
+
+**DTO(s)**
+
+```agsl
+ This decouples our presentation layer from our business logic       
+
+```
 **Java Todo(s)**
 
 ```agsl
 (a)Stream API
 
+Java Basics
+
+(b)Docker Mastery
 ```

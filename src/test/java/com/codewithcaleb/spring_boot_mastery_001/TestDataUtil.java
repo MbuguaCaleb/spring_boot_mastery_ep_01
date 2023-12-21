@@ -1,7 +1,7 @@
 package com.codewithcaleb.spring_boot_mastery_001;
 
-import com.codewithcaleb.spring_boot_mastery_001.domain.Author;
-import com.codewithcaleb.spring_boot_mastery_001.domain.Book;
+import com.codewithcaleb.spring_boot_mastery_001.domain.entities.AuthorEntity;
+import com.codewithcaleb.spring_boot_mastery_001.domain.entities.BookEntity;
 
 public final class TestDataUtil {
 
@@ -10,58 +10,58 @@ public final class TestDataUtil {
     private TestDataUtil(){
     }
 
-    public static Author createTestAuthorA() {
-        Author author = Author.builder()
+    public static AuthorEntity createTestAuthorA() {
+        AuthorEntity authorEntity = AuthorEntity.builder()
                 .id(1L)
                 .name("Caleb Mbugua")
                 .age(80)
                 .build();
-        return author;
+        return authorEntity;
     }
 
-    public static Author createTestAuthorB() {
-        Author author = Author.builder()
+    public static AuthorEntity createTestAuthorB() {
+        AuthorEntity authorEntity = AuthorEntity.builder()
                 .id(2L)
                 .name("Mercy Wanjiru")
                 .age(44)
                 .build();
-        return author;
+        return authorEntity;
     }
 
-    public static Author createTestAuthorC() {
-        Author author = Author.builder()
+    public static AuthorEntity createTestAuthorC() {
+        AuthorEntity authorEntity = AuthorEntity.builder()
                 .id(3L)
                 .name("Joseph Atela")
                 .age(24)
                 .build();
-        return author;
+        return authorEntity;
     }
 
-    public static Book createTestBookA(Author author) {
-        Book book = Book.builder()
+    public static BookEntity createTestBookA(AuthorEntity authorEntity) {
+        BookEntity bookEntity = BookEntity.builder()
                 .isbn("8486-76-897897-3")
                 .title("Caleb Masters Spring")
-                .author(author)
+                .authorEntity(authorEntity)
                 .build();
-        return book;
+        return bookEntity;
     }
 
-    public static Book createTestBookB(Author author) {
-        Book book = Book.builder()
+    public static BookEntity createTestBookB(AuthorEntity authorEntity) {
+        BookEntity bookEntity = BookEntity.builder()
                 .isbn("8486-76-897897-2")
                 .title("Caleb Masters Spring")
-                .author(author)
+                .authorEntity(authorEntity)
                 .build();
-        return book;
+        return bookEntity;
     }
 
-    public static Book createTestBookC(Author author) {
-        Book book = Book.builder()
+    public static BookEntity createTestBookC(AuthorEntity authorEntity) {
+        BookEntity bookEntity = BookEntity.builder()
                 .isbn("8486-76-897897-1")
                 .title("Caleb Masters Spring")
-                .author(author)
+                .authorEntity(authorEntity)
                 .build();
-        return book;
+        return bookEntity;
     }
 
 }

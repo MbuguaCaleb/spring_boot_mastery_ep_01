@@ -1,7 +1,7 @@
 package com.codewithcaleb.spring_boot_mastery_001.repositories;
 
 import com.codewithcaleb.spring_boot_mastery_001.TestDataUtil;
-import com.codewithcaleb.spring_boot_mastery_001.domain.Author;
+import com.codewithcaleb.spring_boot_mastery_001.domain.entities.AuthorEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,58 +30,58 @@ public class AuthorRepositoryIntegrationTests {
 
     @Test
     public void testThatAuthorCanBeCreatedAndRecalled(){
-        Author author = TestDataUtil.createTestAuthorA();
-        underTest.save(author);
-        Optional<Author> result = underTest.findById(author.getId());
+        AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
+        underTest.save(authorEntity);
+        Optional<AuthorEntity> result = underTest.findById(authorEntity.getId());
         assertThat(result).isPresent();
-        assertThat(result.get()).isEqualTo(author);
+        assertThat(result.get()).isEqualTo(authorEntity);
     }
 
     @Test
     public void testThatMultipleAuthorsCanBeCreatedAndRecalled(){
-        Author testAuthorA = TestDataUtil.createTestAuthorA();
-        underTest.save(testAuthorA);
-        Author testAuthorB = TestDataUtil.createTestAuthorB();
-        underTest.save(testAuthorB);
-        Author testAuthorC = TestDataUtil.createTestAuthorC();
-        underTest.save(testAuthorC);
+        AuthorEntity testAuthorAEntity = TestDataUtil.createTestAuthorA();
+        underTest.save(testAuthorAEntity);
+        AuthorEntity testAuthorBEntity = TestDataUtil.createTestAuthorB();
+        underTest.save(testAuthorBEntity);
+        AuthorEntity testAuthorCEntity = TestDataUtil.createTestAuthorC();
+        underTest.save(testAuthorCEntity);
 
-        Iterable<Author> result = underTest.findAll();
+        Iterable<AuthorEntity> result = underTest.findAll();
         assertThat(result)
                 .hasSize(3)
-                .contains(testAuthorA,testAuthorB,testAuthorC);
+                .contains(testAuthorAEntity, testAuthorBEntity, testAuthorCEntity);
     }
 
 
     @Test
     public void testThatAuthorCanBeUpdated(){
         //i need to create then update
-        Author testAuthorA = TestDataUtil.createTestAuthorA();
-        underTest.save(testAuthorA);
+        AuthorEntity testAuthorAEntity = TestDataUtil.createTestAuthorA();
+        underTest.save(testAuthorAEntity);
 
         //save is used for creating and updating in Spring Data JPA
-        testAuthorA.setName("UPDATED");
-        underTest.save(testAuthorA);
+        testAuthorAEntity.setName("UPDATED");
+        underTest.save(testAuthorAEntity);
 
         //finding the updated author to assert the results
-        Optional<Author> result = underTest.findById(testAuthorA.getId());
+        Optional<AuthorEntity> result = underTest.findById(testAuthorAEntity.getId());
         assertThat(result).isPresent();
-        assertThat(result.get()).isEqualTo(testAuthorA);
+        assertThat(result.get()).isEqualTo(testAuthorAEntity);
     }
 
     @Test
     public void testAuthorCanBeDeleted(){
 
         //creating an author
-        Author testAuthorA = TestDataUtil.createTestAuthorA();
-        underTest.save(testAuthorA);
+        AuthorEntity testAuthorAEntity = TestDataUtil.createTestAuthorA();
+        underTest.save(testAuthorAEntity);
 
-        Long authorId = testAuthorA.getId();
+        Long authorId = testAuthorAEntity.getId();
 
         underTest.deleteById(authorId);
 
         //Get the optional
-        Optional<Author> result = underTest.findById(authorId);
+        Optional<AuthorEntity> result = underTest.findById(authorId);
 
         //assert
         assertThat(result).isEmpty();
@@ -94,33 +93,33 @@ public class AuthorRepositoryIntegrationTests {
     //You are not using a Production Database
     @Test
     public void testThatGetAuthorsWithAgeLessThan(){
-        Author testAuthorA = TestDataUtil.createTestAuthorA();
-        underTest.save(testAuthorA);
+        AuthorEntity testAuthorAEntity = TestDataUtil.createTestAuthorA();
+        underTest.save(testAuthorAEntity);
 
-        Author testAuthorB = TestDataUtil.createTestAuthorB();
-        underTest.save(testAuthorB);
+        AuthorEntity testAuthorBEntity = TestDataUtil.createTestAuthorB();
+        underTest.save(testAuthorBEntity);
 
-        Author testAuthorC = TestDataUtil.createTestAuthorC();
-        underTest.save(testAuthorC);
+        AuthorEntity testAuthorCEntity = TestDataUtil.createTestAuthorC();
+        underTest.save(testAuthorCEntity);
 
-        Iterable<Author> results = underTest.ageLessThan(50);
+        Iterable<AuthorEntity> results = underTest.ageLessThan(50);
 
-        assertThat(results).containsExactly(testAuthorB,testAuthorC);
+        assertThat(results).containsExactly(testAuthorBEntity, testAuthorCEntity);
     }
 
     @Test
     public void testThatGetAuthorsWithAgeGreaterThan(){
-        Author testAuthorA = TestDataUtil.createTestAuthorA();
-        underTest.save(testAuthorA);
+        AuthorEntity testAuthorAEntity = TestDataUtil.createTestAuthorA();
+        underTest.save(testAuthorAEntity);
 
-        Author testAuthorB = TestDataUtil.createTestAuthorB();
-        underTest.save(testAuthorB);
+        AuthorEntity testAuthorBEntity = TestDataUtil.createTestAuthorB();
+        underTest.save(testAuthorBEntity);
 
-        Author testAuthorC = TestDataUtil.createTestAuthorC();
-        underTest.save(testAuthorC);
+        AuthorEntity testAuthorCEntity = TestDataUtil.createTestAuthorC();
+        underTest.save(testAuthorCEntity);
 
-        Iterable<Author> results = underTest.findAuthorsWithAgeGreaterThan(50);
-        assertThat(results).containsExactly(testAuthorA);
+        Iterable<AuthorEntity> results = underTest.findAuthorsWithAgeGreaterThan(50);
+        assertThat(results).containsExactly(testAuthorAEntity);
     }
 
 }

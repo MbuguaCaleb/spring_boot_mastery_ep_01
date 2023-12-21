@@ -1,4 +1,4 @@
-package com.codewithcaleb.spring_boot_mastery_001.domain;
+package com.codewithcaleb.spring_boot_mastery_001.domain.entities;
 
 
 import jakarta.persistence.*;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name = "books")
-public class Book {
+public class BookEntity {
 
     @Id //i i annotate any other column ,it will automatically be the primaryKey
     private String isbn;
@@ -26,6 +26,6 @@ public class Book {
     //When i save the book i also save the author ID as long as it is passed
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id")
-    private Author author;
+    private AuthorEntity authorEntity;
 
 }
