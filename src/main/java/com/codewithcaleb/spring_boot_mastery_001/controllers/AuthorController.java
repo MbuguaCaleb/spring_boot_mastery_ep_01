@@ -6,7 +6,6 @@ package com.codewithcaleb.spring_boot_mastery_001.controllers;
 import com.codewithcaleb.spring_boot_mastery_001.domain.dto.AuthorDto;
 import com.codewithcaleb.spring_boot_mastery_001.domain.entities.AuthorEntity;
 import com.codewithcaleb.spring_boot_mastery_001.mappers.Mapper;
-import com.codewithcaleb.spring_boot_mastery_001.mappers.impl.AuthorMapperImpl;
 import com.codewithcaleb.spring_boot_mastery_001.services.AuthorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
